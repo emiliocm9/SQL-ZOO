@@ -21,3 +21,13 @@ SELECT teacher.name, COALESCE(dept.name, 'None') FROM teacher LEFT JOIN dept ON 
 
 /* 7.- Use COUNT to show the number of teachers and the number of mobile phones. */
 SELECT COUNT(teacher.name), COUNT(teacher.mobile) FROM teacher
+
+/* 8.- Use COUNT and GROUP BY dept.name to show each department and the number of staff. Use a RIGHT JOIN to ensure that the Engineering department is listed. */
+SELECT dept.name, COUNT(teacher.name) FROM dept LEFT JOIN teacher ON teacher.dept = dept.id
+GROUP BY dept.name
+
+/* 9.-Use CASE to show the name of each teacher followed by 'Sci' if the teacher is in dept 1 or 2 and 'Art' otherwise. */
+SELECT name, (CASE WHEN dept IN (1, 2) THEN 'Sci' ELSE 'Art' END) AS name FROM teacher 
+
+/* 10.- Use CASE to show the name of each teacher followed by 'Sci' if the teacher is in dept 1 or 2, show 'Art' if the teacher's dept is 3 and 'None' otherwise. */
+SELECT name, (CASE WHEN dept IN (1, 2) THEN 'Sci' WHEN dept = 3 THEN 'Art' ELSE 'None' END) AS name FROM teacher
