@@ -3,7 +3,7 @@
 Modify it to show the matchid and player name for all goals scored by Germany. To identify German players, check for: teamid = 'GER'
 
   SELECT matchid, player FROM goal 
-  WHERE teamid LIKE 'GER'
+  WHERE teamid LIKE 'GER';
 
 2- From the previous query you can see that Lars Bender's scored a goal in game 1012. Now we want to know what teams were playing in that match.
 
@@ -13,7 +13,7 @@ Show id, stadium, team1, team2 for just game 1012
 
 SELECT id,stadium,team1,team2
   FROM game
-WHERE id = 1012
+WHERE id = 1012;
 
 3- The FROM clause says to merge data from the goal table with that from the game table. The ON says how to figure out which rows in game go with which rows in goal - the matchid from goal must match id from game. (If we wanted to be more clear/specific we could say
 ON (game.id=goal.matchid)
@@ -23,7 +23,7 @@ The code below shows the player (from the goal) and stadium name (from the game 
 Modify it to show the player, teamid, stadium and mdate for every German goal.
 
 SELECT player, teamid, stadium, mdate
-  FROM game JOIN goal ON (id=matchid) WHERE teamid = 'GER'
+  FROM game JOIN goal ON (id=matchid) WHERE teamid = 'GER';
 
 4- Use the same JOIN as in the previous question.
 
@@ -32,7 +32,7 @@ Show the team1, team2 and player for every goal scored by a player called Mario 
 SELECT team1, team2, player FROM game
 JOIN goal
 ON matchid = id
-WHERE player LIKE 'Mario%'
+WHERE player LIKE 'Mario%';
 
 5- The table eteam gives details of every national team including the coach. You can JOIN goal to eteam using the phrase goal JOIN eteam on teamid=id
 
@@ -41,7 +41,7 @@ Show player, teamid, coach, gtime for all goals scored in the first 10 minutes g
 SELECT player, teamid, coach, gtime FROM goal
 JOIN eteam
 ON teamid=id
-WHERE gtime<=10
+WHERE gtime<=10;
 
 6- To JOIN game with eteam you could use either
 game JOIN eteam ON (team1=eteam.id) or game JOIN eteam ON (team2=eteam.id)
@@ -52,14 +52,14 @@ List the dates of the matches and the name of the team in which 'Fernando Santos
 SELECT mdate, teamname FROM game
 JOIN eteam
 ON team1=eteam.id
-WHERE coach = 'Fernando Santos'
+WHERE coach = 'Fernando Santos';
 
 7- List the player for every goal scored in a game where the stadium was 'National Stadium, Warsaw'
 
 SELECT player FROM goal
 JOIN game
 ON matchid = id
-WHERE stadium = 'National Stadium, Warsaw'
+WHERE stadium = 'National Stadium, Warsaw';
 
 8- The example query shows all goals scored in the Germany-Greece quarterfinal.
 Instead show the name of all players who scored a goal against Germany.
@@ -68,12 +68,12 @@ SELECT DISTINCT player
   FROM goal 
 JOIN game 
 ON matchid = id
-    WHERE (team1='GER' OR team2='GER') AND (teamid !='GER')
+    WHERE (team1='GER' OR team2='GER') AND (teamid !='GER');
 
 9- Show teamname and the total number of goals scored.
 SELECT teamname, COUNT(teamid)
   FROM eteam JOIN goal ON id=teamid
- GROUP BY teamname
+ GROUP BY teamname;
 
 10-Show the stadium and the number of goals scored in each stadium.
 SELECT stadium, COUNT(matchid) FROM goal
@@ -93,7 +93,7 @@ FROM goal
 JOIN game
 ON matchid = id
 WHERE teamid = 'GER'
-GROUP BY matchid
+GROUP BY matchid;
 
 13-Notice in the query given every goal is listed. If it was a team1 goal then a 1 appears in score1, otherwise there is a 0. You could SUM this column to get a count of the goals scored by team1. Sort your result by mdate, matchid, team1 and team2.
 
@@ -104,4 +104,4 @@ SELECT mdate,
   ELSE 0 END) AS score2
   FROM game LEFT JOIN goal ON matchid = id
 GROUP BY id, mdate, team1, team2
-ORDER BY mdate,matchid,team1,team2
+ORDER BY mdate,matchid,team1,team2;
